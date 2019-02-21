@@ -17,20 +17,51 @@ $("#start").click(function(){
 	function timer(){
 
 		$("#start, #minus5Clock, #add5Clock, #minus5Break, #add5Break, #breakNum, #title1, #title2" ).hide();
+		$("#timeType").show();
 		$("#timeType").html("Session Time: ");
 		count-=1;
 		if(count===0){
 
 		buzzer.play();
 		clearInterval(counter);
+
+		var startBreak = setInterval(breakTimer, 1000);
+		$("#num").hide();
+
 	}
 
 		$("#num").html(count);
 
+
+		function breakTimer() {
+			$("#timeType").html("Break time Baby: ");
+			$("#breakNum").show();
+			breakTime -=1;
+			if(breakTime === 0){
+				clearInterval(startBreak);
+				$("#reset").show();
+				buzzer.play();
+				$("#timeType, #breakNum").hide();
+
+			}
+
+			$("#breakNum").html(breakTime);
+		}
+
 	}
+
+
 
 });
 
+$("#reset").click(function(){
+count=5;
+breakTime=5;
+$("#num").html(count);
+$("#breakNum").html(breakTime);
+$("#start, #minus5Clock, #add5Clock, #minus5Break, #add5Break, #breakNum, #num, #title1, #title2").show();
+$("#reset, #timeType").hide();
+});
 
 
 $('#minus5Clock').click(function(){
